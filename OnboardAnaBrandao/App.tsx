@@ -1,14 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -18,10 +9,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const Section: React.FC<{
   title: string;
@@ -68,7 +56,7 @@ const App = () => {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Hello World!"></Section>
+          <Section title="Hello World!" />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -84,14 +72,13 @@ const styles = StyleSheet.create({
     marginTop: 80,
     fontSize: 24,
     fontWeight: '600',
-    textAlign: "center",
-    
+    textAlign: 'center',
   },
   sectionDescription: {
     marginTop: 20,
     fontSize: 18,
     fontWeight: '400',
-    textAlign: "center",
+    textAlign: 'center',
   },
   highlight: {
     fontWeight: '700',

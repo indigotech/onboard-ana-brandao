@@ -5,17 +5,27 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'import', 'deprecation'],
   rules: {
     'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': ['error'],
-    'import/no-unresolved': ['error', { ignore: ['.png$', '.webp$', '.jpg$', 'story-loader'] }],
+    //'@typescript-eslint/no-shadow': ['error'],
+    'import/no-unresolved': [
+      'error',
+      {ignore: ['.png$', '.webp$', '.jpg$', 'story-loader']},
+    ],
     'import/order': [
       'error',
       {
-        groups: [['builtin', 'external'], 'internal', 'parent', 'sibling', 'index'],
+        groups: [
+          ['builtin', 'external'],
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+        ],
         pathGroups: [
           {
             pattern: 'react',

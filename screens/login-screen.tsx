@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -12,6 +13,43 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const validEmail = (email:string) => {
+    const er = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.com$/;
+    return er.test(email)
+  }
+
+  const validPassword = (password:string) => {
+    const er = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,50}$/;
+    return er.test(password)
+  }
+
+const loginHandle = (email:string, password:string) => {
+    if ( email.length == 0 || password.length == 0 ) {
+      Alert.alert('Campos obrigatórios!', 'Insira um e-mail e uma senha.', [
+        {text: 'Ok'}
+      ]);
+        return;
+    }
+    if ( password.length > 0 && password.length < 7 ) {
+      Alert.alert('Senha inválida!', 'A senha deve ter ao menos 7 caracteres.', [
+        {text: 'Ok'}
+      ]);
+      return;
+    }
+    if ( validEmail(email) == false) {
+      Alert.alert('Email inválido!', 'Insira um e-mail válido.', [
+        {text: 'Ok'}
+      ]);
+      return;
+    }
+    if ( validPassword(password) == false) {
+      Alert.alert('Senha inválida!', 'A senha deve ter ao menos um número e uma letra.', [
+        {text: 'Ok'}
+      ]);
+      return;
+    }
+}
+
   return (
     <View>
       <Text style={styles.loginDescription}>E-mail</Text>
@@ -19,16 +57,19 @@ const LoginScreen = () => {
         style={styles.loginInput}
         value={email}
         onChangeText={setEmail}
-        placeholder="example@example.com"
+        placeholder="Digite seu e-mail"
       />
       <Text style={styles.loginDescription}>Senha</Text>
       <TextInput
         style={styles.loginInput}
         value={password}
         onChangeText={setPassword}
+        placeholder="Digite sua senha"
         secureTextEntry
       />
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity 
+        style={styles.loginButton} 
+        onPress={() => {loginHandle( email, password )}}>
         <Text style={styles.loginButtonText}>Entrar</Text>
       </TouchableOpacity>
     </View>

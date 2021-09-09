@@ -9,46 +9,50 @@ import {
   View,
 } from 'react-native';
 
+const isValidEmail = (email: string) => {
+  const er = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.com$/;
+  return er.test(email);
+};
+
+const isValidPassword = (password: string) => {
+  const er = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,50}$/;
+  return er.test(password);
+};
+
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const validEmail = (email:string) => {
-    const er = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.com$/;
-    return er.test(email)
-  }
-
-  const validPassword = (password:string) => {
-    const er = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,50}$/;
-    return er.test(password)
-  }
-
-const loginHandle = (email:string, password:string) => {
-    if ( email.length == 0 || password.length == 0 ) {
+  const handleLogin = () => {
+    if (email.length === 0 || password.length === 0) {
       Alert.alert('Campos obrigatórios!', 'Insira um e-mail e uma senha.', [
-        {text: 'Ok'}
-      ]);
-        return;
-    }
-    if ( password.length > 0 && password.length < 7 ) {
-      Alert.alert('Senha inválida!', 'A senha deve ter ao menos 7 caracteres.', [
-        {text: 'Ok'}
+        {text: 'Ok'},
       ]);
       return;
     }
-    if ( validEmail(email) == false) {
+    if (password.length > 0 && password.length < 7) {
+      Alert.alert(
+        'Senha inválida!',
+        'A senha deve ter ao menos 7 caracteres.',
+        [{text: 'Ok'}],
+      );
+      return;
+    }
+    if (!isValidEmail(email)) {
       Alert.alert('Email inválido!', 'Insira um e-mail válido.', [
-        {text: 'Ok'}
+        {text: 'Ok'},
       ]);
       return;
     }
-    if ( validPassword(password) == false) {
-      Alert.alert('Senha inválida!', 'A senha deve ter ao menos um número e uma letra.', [
-        {text: 'Ok'}
-      ]);
+    if (!isValidPassword(password)) {
+      Alert.alert(
+        'Senha inválida!',
+        'A senha deve ter ao menos um número e uma letra.',
+        [{text: 'Ok'}],
+      );
       return;
     }
-}
+  };
 
   return (
     <View>
@@ -67,9 +71,11 @@ const loginHandle = (email:string, password:string) => {
         placeholder="Digite sua senha"
         secureTextEntry
       />
-      <TouchableOpacity 
-        style={styles.loginButton} 
-        onPress={() => {loginHandle( email, password )}}>
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => {
+          handleLogin();
+        }}>
         <Text style={styles.loginButtonText}>Entrar</Text>
       </TouchableOpacity>
     </View>

@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 
 const isValidEmail = (email: string) => {
-  const er = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.com$/;
-  return er.test(email);
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.com$/;
+  return emailRegex.test(email);
 };
 
 const isValidPassword = (password: string) => {
-  const er = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,50}$/;
-  return er.test(password);
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,50}$/;
+  return passwordRegex.test(password);
 };
 
 const LoginScreen = () => {

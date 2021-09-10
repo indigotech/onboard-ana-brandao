@@ -1,7 +1,0 @@
-node_modules/
-tsconfig.json
-node_modules
-*.test.*
-jest.config.js
-babel.config.js
-metro.config.js

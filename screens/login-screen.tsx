@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {Navigation} from 'react-native-navigation';
 
 import {
   isValidEmail,
@@ -17,12 +18,26 @@ import {
   LOGIN_MUTATION,
 } from './login-mutation';
 
-const LoginScreen = () => {
+export const LoginScreen = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, {loading, error}] = useMutation(LOGIN_MUTATION, {
-    onCompleted: async data => await storeData(data.login.token),
+    onCompleted: async data => {
+      await storeData(data.login.token);
+      Navigation.push(props.componentId, {
+        component: {
+          name: 'Home',
+        },
+      });
+    },
   });
+  React.useEffect(() => {
+    Navigation.mergeOptions(props.componentId, {
+      topBar: {
+        title: {alignment: 'center', text: 'Login'},
+      },
+    });
+  }, []);
 
   const handleLogin = async () => {
     if (isValidEmail(email) && isValidPassword(password)) {
@@ -61,6 +76,7 @@ const LoginScreen = () => {
 
   return (
     <View>
+      <Text style={styles.welcome}> Bem-vindo(a) à Taqtile! </Text>
       <Text style={styles.loginDescription}>E-mail</Text>
       <TextInput
         style={styles.loginInput}
@@ -94,6 +110,13 @@ const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  welcome: {
+    marginTop: 50,
+    marginBottom: 30,
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: '600',
+  },
   loginDescription: {
     marginTop: 20,
     fontSize: 17,
@@ -121,11 +144,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   loginError: {
+    marginTop: 20,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 15,
     color: 'red',
     fontWeight: '300',
   },
 });
-
-export default LoginScreen;

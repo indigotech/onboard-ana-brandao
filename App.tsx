@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {
   SafeAreaView,
   ScrollView,
@@ -12,6 +13,11 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import LoginScreen from './screens/login-screen';
+
+const client = new ApolloClient({
+  uri: 'https://tq-template-server-sample.herokuapp.com/graphql',
+  cache: new InMemoryCache(),
+});
 
 const Section: React.FC<{
   title: string;
@@ -49,23 +55,25 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        backgroundColor="white"
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Bem-vindo(a) à Taqtile!" />
-          <LoginScreen />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ApolloProvider client={client}>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          backgroundColor="white"
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        />
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={backgroundStyle}>
+          <View
+            style={{
+              backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            }}>
+            <Section title="Bem-vindo(a) à Taqtile!" />
+            <LoginScreen />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </ApolloProvider>
   );
 };
 

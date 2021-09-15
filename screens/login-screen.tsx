@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
@@ -105,6 +106,7 @@ export const LoginScreen = props => {
           {loading ? 'Carregando' : 'Entrar'}
         </Text>
       </TouchableOpacity>
+      <View>{loading ? <ActivityIndicator color="lightgrey" /> : null}</View>
       <Text style={styles.loginError}>{error && error.toString()}</Text>
     </View>
   );

@@ -30,6 +30,7 @@ export const LoginScreen = props => {
         },
       });
     },
+    onError: () => {},
   });
   React.useEffect(() => {
     Navigation.mergeOptions(props.componentId, {

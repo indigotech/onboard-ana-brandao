@@ -1,31 +1,25 @@
 import React from 'react';
 
+import {useQuery} from '@apollo/client';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
-const USERS = [
-  {
-    token: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Taqtile Adm',
-    email: 'admin@taqtile.com.br',
-  },
-  {
-    token: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    name: 'Taqtile Designer',
-    email: 'designer@taqtile.com.br',
-  },
-  {
-    token: '58694a0f-3da1-471f-bd96-145571e29d72',
-    name: 'Taqtile Intern',
-    email: 'intern@taqtile.com.br',
-  },
-];
+import {USERS_QUERY} from '../features/users-features';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
 
 const ViewItem = ({name, email}: {name: string; email: string}) => (
   <View style={styles.item}>
     <Text style={styles.name}>{name}</Text>
     <Text style={styles.email}>{email}</Text>
   </View>
+);
+const renderItem = ({item}: {item: User}) => (
+  <ViewItem name={item.name} email={item.email} />
 );
 
 export const UsersScreen = (props: {componentId: string}) => {
@@ -35,19 +29,18 @@ export const UsersScreen = (props: {componentId: string}) => {
         title: {alignment: 'center', text: 'Usuários'},
       },
     });
-  }, []);
+  }, [props.componentId]);
 
-  const renderItem = ({item}: {item: any}) => (
-    <ViewItem name={item.name} email={item.email} />
-  );
+  const {data} = useQuery(USERS_QUERY, {});
 
   return (
     <View>
       <FlatList
-        data={USERS}
+        data={data?.users.nodes}
         renderItem={renderItem}
-        keyExtractor={item => item.token}
+        keyExtractor={item => item.id}
       />
+      <Text>Users Screen</Text>
     </View>
   );
 };

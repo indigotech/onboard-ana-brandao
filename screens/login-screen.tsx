@@ -17,9 +17,17 @@ import {
   isValidPassword,
   storeData,
   LOGIN_MUTATION,
-} from './login-mutation';
+} from '../features/login-features';
 
 export const LoginScreen = (props: {componentId: string}) => {
+  React.useEffect(() => {
+    Navigation.mergeOptions(props.componentId, {
+      topBar: {
+        title: {alignment: 'center', text: 'Login'},
+      },
+    });
+  }, [props.componentId]);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, {loading, error}] = useMutation(LOGIN_MUTATION, {
@@ -33,14 +41,6 @@ export const LoginScreen = (props: {componentId: string}) => {
     },
     onError: () => {},
   });
-  React.useEffect(() => {
-    Navigation.mergeOptions(props.componentId, {
-      topBar: {
-        title: {alignment: 'center', text: 'Login'},
-      },
-    });
-  }, []);
-
   const handleLogin = async () => {
     if (isValidEmail(email) && isValidPassword(password)) {
       await login({variables: {email, password}});

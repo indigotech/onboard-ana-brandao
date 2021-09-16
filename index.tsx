@@ -7,8 +7,8 @@ import React from 'react';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {Navigation} from 'react-native-navigation';
 
-import HomeScreen from './screens/home-screen';
 import {LoginScreen} from './screens/login-screen';
+import {UsersScreen} from './screens/users-screen';
 
 const client = new ApolloClient({
   uri: 'https://tq-template-server-sample.herokuapp.com/graphql',
@@ -25,7 +25,7 @@ Navigation.registerComponent(
     ),
   () => LoginScreen,
 );
-Navigation.registerComponent('Home', () => HomeScreen);
+Navigation.registerComponent('Users', () => UsersScreen);
 
 Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setRoot({

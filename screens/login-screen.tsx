@@ -19,7 +19,7 @@ import {
   LOGIN_MUTATION,
 } from './login-mutation';
 
-export const LoginScreen = props => {
+export const LoginScreen = (props: {componentId: string}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, {loading, error}] = useMutation(LOGIN_MUTATION, {
@@ -27,7 +27,7 @@ export const LoginScreen = props => {
       await storeData(data.login.token);
       Navigation.push(props.componentId, {
         component: {
-          name: 'Home',
+          name: 'Users',
         },
       });
     },

@@ -106,7 +106,7 @@ export const LoginScreen = props => {
           {loading ? 'Carregando' : 'Entrar'}
         </Text>
       </TouchableOpacity>
-      <View>{loading ? <ActivityIndicator color="lightgrey" /> : null}</View>
+      {loading && <ActivityIndicator color="lightgrey" />}
       <Text style={styles.loginError}>{error && error.toString()}</Text>
     </View>
   );

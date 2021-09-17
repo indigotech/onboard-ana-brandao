@@ -4,13 +4,12 @@ import {useQuery} from '@apollo/client';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
-import {USERS_QUERY} from '../features/users-features';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+import {
+  USERS_QUERY,
+  User,
+  UsersQuery,
+  PageInput,
+} from '../features/users-features';
 
 const ViewItem = ({name, email}: {name: string; email: string}) => (
   <View style={styles.item}>
@@ -31,7 +30,31 @@ export const UsersScreen = (props: {componentId: string}) => {
     });
   }, [props.componentId]);
 
-  const {data} = useQuery(USERS_QUERY, {});
+  const {data, fetchMore} = useQuery<UsersQuery, PageInput>(USERS_QUERY, {
+    variables: {
+      offset: 0,
+      limit: 10,
+    },
+  });
+  const onEndReached = async () => {
+    if (data?.users.pageInfo.hasNextPage) {
+      await fetchMore({
+        variables: {
+          offset: data?.users.nodes.length,
+        },
+        updateQuery: (previousResult, {fetchMoreResult}): UsersQuery => {
+          const newResult = fetchMoreResult?.users.nodes ?? [];
+          return {
+            ...previousResult,
+            users: {
+              ...previousResult.users,
+              nodes: [...previousResult.users.nodes, ...newResult],
+            },
+          };
+        },
+      });
+    }
+  };
 
   return (
     <View>
@@ -39,6 +62,7 @@ export const UsersScreen = (props: {componentId: string}) => {
         data={data?.users.nodes}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        onEndReached={onEndReached}
       />
     </View>
   );

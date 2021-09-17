@@ -18,13 +18,36 @@ export const authLink = setContext(async (_, {headers}) => {
 });
 
 export const USERS_QUERY = gql`
-  query {
-    users {
+  query Users($offset: Int!, $limit: Int!) {
+    users(pageInfo: {offset: $offset, limit: $limit}) {
       nodes {
         id
         name
         email
       }
+      pageInfo {
+        hasNextPage
+      }
     }
   }
 `;
+
+export interface UsersQuery {
+  users: Results;
+}
+interface Results {
+  nodes: User[];
+  pageInfo: PageInfo;
+}
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+interface PageInfo {
+  hasNextPage: boolean;
+}
+export interface PageInput {
+  offset: number;
+  limit: number;
+}

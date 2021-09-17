@@ -40,7 +40,6 @@ export const UsersScreen = (props: {componentId: string}) => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-      <Text>Users Screen</Text>
     </View>
   );
 };

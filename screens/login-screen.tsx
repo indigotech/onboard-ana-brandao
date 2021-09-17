@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import {useMutation} from '@apollo/client';
 import {
   Alert,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -12,12 +11,9 @@ import {
 } from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
-import {
-  isValidEmail,
-  isValidPassword,
-  storeData,
-  LOGIN_MUTATION,
-} from '../features/login-features';
+import {storeData, LOGIN_MUTATION} from '../features/login-features';
+import {styles} from '../features/styles';
+import {isValidEmail, isValidPassword} from '../features/validations';
 
 export const LoginScreen = (props: {componentId: string}) => {
   React.useEffect(() => {
@@ -79,78 +75,35 @@ export const LoginScreen = (props: {componentId: string}) => {
   return (
     <View>
       <Text style={styles.welcome}> Bem-vindo(a) à Taqtile! </Text>
-      <Text style={styles.loginDescription}>E-mail</Text>
+      <Text style={styles.formDescription}>E-mail</Text>
       <TextInput
-        style={styles.loginInput}
+        style={styles.formInput}
         autoCapitalize="none"
         value={email}
         onChangeText={setEmail}
-        placeholder="Digite seu e-mail"
+        placeholder="email@email.com.br"
       />
-      <Text style={styles.loginDescription}>Senha</Text>
+      <Text style={styles.formDescription}>Senha</Text>
       <TextInput
-        style={styles.loginInput}
+        style={styles.formInput}
         autoCapitalize="none"
         value={password}
         onChangeText={setPassword}
-        placeholder="Digite sua senha"
+        placeholder="0000aaaa"
         secureTextEntry
       />
       <TouchableOpacity
-        style={styles.loginButton}
+        style={styles.formButton}
         disabled={loading}
         onPress={() => {
           handleLogin();
         }}>
-        <Text style={styles.loginButtonText}>
+        <Text style={styles.formButtonText}>
           {loading ? 'Carregando' : 'Entrar'}
         </Text>
       </TouchableOpacity>
       {loading && <ActivityIndicator color="lightgrey" />}
-      <Text style={styles.loginError}>{error && error.toString()}</Text>
+      <Text style={styles.formError}>{error && error.toString()}</Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  welcome: {
-    marginTop: 50,
-    marginBottom: 30,
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  loginDescription: {
-    marginTop: 20,
-    fontSize: 17,
-    margin: 18,
-    fontWeight: '300',
-  },
-  loginInput: {
-    borderColor: 'lightgrey',
-    borderWidth: 1,
-    padding: 12,
-    borderRadius: 12,
-    margin: 15,
-  },
-  loginButton: {
-    marginTop: 45,
-    backgroundColor: 'lightseagreen',
-    padding: 12,
-    borderRadius: 12,
-    margin: 15,
-  },
-  loginButtonText: {
-    textAlign: 'center',
-    fontSize: 18,
-    color: 'white',
-    fontWeight: '500',
-  },
-  loginError: {
-    marginTop: 20,
-    textAlign: 'center',
-    fontSize: 15,
-    color: 'red',
-    fontWeight: '300',
-  },
-});

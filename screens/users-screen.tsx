@@ -1,9 +1,11 @@
 import React from 'react';
 
 import {useQuery} from '@apollo/client';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 import {Navigation} from 'react-native-navigation';
+import {FAB} from 'react-native-paper';
 
+import {styles} from '../features/styles';
 import {
   USERS_QUERY,
   User,
@@ -65,22 +67,17 @@ export const UsersScreen = (props: {componentId: string}) => {
         keyExtractor={item => item.id}
         onEndReached={onEndReached}
       />
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        onPress={() => {
+          Navigation.push(props.componentId, {
+            component: {
+              name: 'AddUser',
+            },
+          });
+        }}
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  item: {
-    flex: 1,
-    padding: 20,
-  },
-  name: {
-    fontSize: 18,
-    marginBottom: 10,
-    color: 'black',
-  },
-  email: {
-    fontSize: 15,
-    color: 'lightseagreen',
-  },
-});

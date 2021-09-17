@@ -13,6 +13,7 @@ import {
 import {Navigation} from 'react-native-navigation';
 
 import {authLink, httpLink} from './features/users-features';
+import {AddUserScreen} from './screens/adduser-screen';
 import {LoginScreen} from './screens/login-screen';
 import {UsersScreen} from './screens/users-screen';
 
@@ -40,6 +41,16 @@ Navigation.registerComponent(
       </ApolloProvider>
     ),
   () => UsersScreen,
+);
+Navigation.registerComponent(
+  'AddUser',
+  () => props =>
+    (
+      <ApolloProvider client={client}>
+        <AddUserScreen {...props} />
+      </ApolloProvider>
+    ),
+  () => AddUserScreen,
 );
 
 Navigation.events().registerAppLaunchedListener(async () => {

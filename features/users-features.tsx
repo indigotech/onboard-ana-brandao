@@ -33,20 +33,24 @@ export const USERS_QUERY = gql`
 `;
 
 export interface UsersQuery {
-  users: Results;
+  users: UsersResults;
 }
-interface Results {
+
+interface UsersResults {
   nodes: User[];
   pageInfo: PageInfo;
 }
+
 export interface User {
   id: string;
   name: string;
   email: string;
 }
+
 interface PageInfo {
   hasNextPage: boolean;
 }
+
 export interface PageInput {
   offset: number;
   limit: number;

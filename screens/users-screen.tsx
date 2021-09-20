@@ -36,6 +36,7 @@ export const UsersScreen = (props: {componentId: string}) => {
       limit: 10,
     },
   });
+
   const onEndReached = async () => {
     if (data?.users.pageInfo.hasNextPage) {
       await fetchMore({

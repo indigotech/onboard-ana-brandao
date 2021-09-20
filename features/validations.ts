@@ -9,8 +9,11 @@ export const isValidPassword = (password: string) => {
 };
 
 export const isValidPhone = (phone: string) => {
-  const phoneRegex = /^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}-[0-9]{4}$/;
-  return phoneRegex.test(phone);
+  if (phone.length !== 11) {
+    return false;
+  } else {
+    return true;
+  }
 };
 
 export const isValidBirthDate = (birthDate: string) => {
@@ -20,7 +23,7 @@ export const isValidBirthDate = (birthDate: string) => {
 };
 
 export const isValidRole = (role: string) => {
-  if (role !== 'Admin' && role !== 'User') {
+  if (role !== 'admin' && role !== 'user') {
     return false;
   } else {
     return true;

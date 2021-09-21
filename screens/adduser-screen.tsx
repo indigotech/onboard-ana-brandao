@@ -1,26 +1,21 @@
 import React, {useState} from 'react';
 
 import {useMutation} from '@apollo/client';
-import {
-  Alert,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import {Alert, ScrollView, ActivityIndicator} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {RadioButton} from 'react-native-paper';
 
 import {ADDUSER_MUTATION} from '../features/adduser-features';
-import {styles} from '../features/styles';
 import {
   isValidPhone,
   isValidBirthDate,
   isValidEmail,
-  isValidRole,
   isValidPassword,
+  isValidName,
 } from '../features/validations';
+import {Button, ButtonText} from '../styled-components/button';
+import {Form, FormError, FormLabel} from '../styled-components/forms';
+import {styles} from '../styled-components/styles';
 
 export const AddUserScreen = (props: {componentId: string}) => {
   React.useEffect(() => {
@@ -57,31 +52,6 @@ export const AddUserScreen = (props: {componentId: string}) => {
         {text: 'Ok'},
       ]);
       return;
-    } else if (!isValidPhone(phone)) {
-      Alert.alert('Telefone inválido!', 'Insira um telefone válido.', [
-        {text: 'Ok'},
-      ]);
-      return;
-    } else if (!isValidBirthDate(birthDate)) {
-      Alert.alert(
-        'Data de nascimento inválida!',
-        'Insira uma data de nascimento válida.',
-        [{text: 'Ok'}],
-      );
-      return;
-    } else if (!isValidEmail(email)) {
-      Alert.alert('Email inválido!', 'Insira um e-mail válido.', [
-        {text: 'Ok'},
-      ]);
-      return;
-    } else if (!isValidPassword(password)) {
-      Alert.alert('Senha inválida!', 'Insira uma senha válida.', [
-        {text: 'Ok'},
-      ]);
-      return;
-    } else if (!isValidRole(role)) {
-      Alert.alert('Cargo inválido!', 'Insira um cargo válido.', [{text: 'Ok'}]);
-      return;
     } else {
       await addUser({
         variables: {name, phone, birthDate, email, password, role},
@@ -91,45 +61,57 @@ export const AddUserScreen = (props: {componentId: string}) => {
 
   return (
     <ScrollView>
-      <Text style={styles.formDescription}>Nome completo</Text>
-      <TextInput
-        style={styles.formInput}
+      <Form
+        label="Nome completo"
+        autoCapitalize="words"
+        placeholder="Nome Sobrenome"
         value={name}
         onChangeText={setName}
-        placeholder="Nome Sobrenome"
+        secureTextEntry={false}
+        keyboardType="default"
+        onEndEditing={isValidName(name)}
       />
-      <Text style={styles.formDescription}>Telefone</Text>
-      <TextInput
-        style={styles.formInput}
+      <Form
+        label="Telefone"
+        autoCapitalize="none"
+        placeholder="Com DDD, somente números"
         value={phone}
         onChangeText={setPhone}
-        placeholder="Com DDD, somente números."
+        secureTextEntry={false}
+        keyboardType="numeric"
+        onEndEditing={isValidPhone(phone)}
       />
-      <Text style={styles.formDescription}>Data de nascimento</Text>
-      <TextInput
-        style={styles.formInput}
+      <Form
+        label="Data de nascimento"
+        autoCapitalize="none"
+        placeholder="AAAA-MM-DD"
         value={birthDate}
         onChangeText={setBirthDate}
-        placeholder="AAAA-MM-DD"
+        secureTextEntry={false}
+        keyboardType="phone-pad"
+        onEndEditing={isValidBirthDate(birthDate)}
       />
-      <Text style={styles.formDescription}>E-mail</Text>
-      <TextInput
-        style={styles.formInput}
+      <Form
+        label="E-mail"
         autoCapitalize="none"
+        placeholder="email@email.com.br"
         value={email}
         onChangeText={setEmail}
-        placeholder="email@email.com.br"
+        secureTextEntry={false}
+        keyboardType="email-address"
+        onEndEditing={isValidEmail(email)}
       />
-      <Text style={styles.formDescription}>Senha</Text>
-      <TextInput
-        style={styles.formInput}
+      <Form
+        label="Senha"
         autoCapitalize="none"
+        placeholder="Mínimo 7 caracteres, uma letra e um número"
         value={password}
         onChangeText={setPassword}
-        placeholder="0000aaaa"
         secureTextEntry
+        keyboardType="default"
+        onEndEditing={isValidPassword(password)}
       />
-      <Text style={styles.formDescription}>Cargo</Text>
+      <FormLabel isValid>{'Cargo'}</FormLabel>
       <RadioButton.Group onValueChange={value => setRole(value)} value={role}>
         <RadioButton.Item
           label="Admin"
@@ -142,18 +124,15 @@ export const AddUserScreen = (props: {componentId: string}) => {
           value="user"
         />
       </RadioButton.Group>
-      <TouchableOpacity
-        style={styles.formButton}
+      <Button
         disabled={loading}
         onPress={() => {
           handleAddUser();
         }}>
-        <Text style={styles.formButtonText}>
-          {loading ? 'Carregando' : 'Adicionar usuário'}
-        </Text>
-      </TouchableOpacity>
+        <ButtonText>{loading ? 'Carregando' : 'Adicionar usuário'}</ButtonText>
+      </Button>
       {loading && <ActivityIndicator color="lightgrey" />}
-      <Text style={styles.formError}>{error && error.toString()}</Text>
+      <FormError>{error && error.toString()}</FormError>
     </ScrollView>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useQuery} from '@apollo/client';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {FAB} from 'react-native-paper';
 
@@ -13,16 +13,6 @@ import {
   PageInput,
 } from '../features/users-features';
 
-const ViewItem = ({name, email}: {name: string; email: string}) => (
-  <View style={styles.item}>
-    <Text style={styles.name}>{name}</Text>
-    <Text style={styles.email}>{email}</Text>
-  </View>
-);
-const renderItem = ({item}: {item: User}) => (
-  <ViewItem name={item.name} email={item.email} />
-);
-
 export const UsersScreen = (props: {componentId: string}) => {
   React.useEffect(() => {
     Navigation.mergeOptions(props.componentId, {
@@ -31,6 +21,26 @@ export const UsersScreen = (props: {componentId: string}) => {
       },
     });
   }, [props.componentId]);
+
+  const renderItem = ({item}: {item: User}) => (
+    <TouchableOpacity
+      onPress={() => {
+        Navigation.push(props.componentId, {
+          component: {
+            name: 'UserDetails',
+            passProps: {
+              id: item.id,
+            },
+            id: item.id,
+          },
+        });
+      }}>
+      <View style={styles.item}>
+        <Text style={styles.primary}>{item.name}</Text>
+        <Text style={styles.secondary}>{item.email}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   const {data, fetchMore} = useQuery<UsersQuery, PageInput>(USERS_QUERY, {
     variables: {

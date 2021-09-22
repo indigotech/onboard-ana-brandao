@@ -15,6 +15,7 @@ import {Navigation} from 'react-native-navigation';
 import {authLink, httpLink} from './features/users-features';
 import {AddUserScreen} from './screens/adduser-screen';
 import {LoginScreen} from './screens/login-screen';
+import {UserDetailsScreen} from './screens/userdetails-screen';
 import {UsersScreen} from './screens/users-screen';
 
 export const client = new ApolloClient({
@@ -51,6 +52,16 @@ Navigation.registerComponent(
       </ApolloProvider>
     ),
   () => AddUserScreen,
+);
+Navigation.registerComponent(
+  'UserDetails',
+  () => props =>
+    (
+      <ApolloProvider client={client}>
+        <UserDetailsScreen {...props} />
+      </ApolloProvider>
+    ),
+  () => UserDetailsScreen,
 );
 
 Navigation.events().registerAppLaunchedListener(async () => {

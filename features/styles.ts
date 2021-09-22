@@ -45,16 +45,27 @@ export const styles = StyleSheet.create({
   item: {
     flex: 1,
     padding: 20,
+    marginBottom: -20,
   },
-  name: {
+  row: {
+    flexDirection: 'row',
+  },
+  primary: {
     fontSize: 18,
-    marginBottom: 12,
+    marginBottom: 15,
     color: 'black',
     fontWeight: '500',
   },
-  email: {
+  secondary: {
     fontSize: 15,
+    marginBottom: 12,
     color: 'lightseagreen',
+    marginRight: 6,
+  },
+  tertiary: {
+    fontSize: 15,
+    marginBottom: 12,
+    color: 'black',
   },
   fab: {
     position: 'absolute',

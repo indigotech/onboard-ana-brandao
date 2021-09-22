@@ -1,7 +1,14 @@
 import React, {useState} from 'react';
 
-import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {Navigation} from 'react-native-navigation';
+import {RadioButton} from 'react-native-paper';
 
 import {styles} from '../features/styles';
 import {
@@ -66,7 +73,7 @@ export const AddUserScreen = (props: {componentId: string}) => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <Text style={styles.formDescription}>Nome completo</Text>
       <TextInput
         style={styles.formInput}
@@ -97,12 +104,18 @@ export const AddUserScreen = (props: {componentId: string}) => {
         placeholder="email@email.com.br"
       />
       <Text style={styles.formDescription}>Cargo</Text>
-      <TextInput
-        style={styles.formInput}
-        value={role}
-        onChangeText={setRole}
-        placeholder="Admin ou User"
-      />
+      <RadioButton.Group onValueChange={value => setRole(value)} value={role}>
+        <RadioButton.Item
+          label="Admin"
+          labelStyle={styles.radioButton}
+          value="admin"
+        />
+        <RadioButton.Item
+          label="User"
+          labelStyle={styles.radioButton}
+          value="user"
+        />
+      </RadioButton.Group>
       <TouchableOpacity
         style={styles.formButton}
         onPress={() => {
@@ -110,6 +123,6 @@ export const AddUserScreen = (props: {componentId: string}) => {
         }}>
         <Text style={styles.formButtonText}>Adicionar usuário</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };

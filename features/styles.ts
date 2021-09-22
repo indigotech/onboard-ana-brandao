@@ -62,4 +62,7 @@ export const styles = StyleSheet.create({
     right: 10,
     bottom: 10,
   },
+  radioButton: {
+    color: '#777777',
+  },
 });

@@ -9,11 +9,7 @@ export const isValidPassword = (password: string) => {
 };
 
 export const isValidName = (name: string) => {
-  if (name === '') {
-    return false;
-  } else {
-    return true;
-  }
+  return !!name;
 };
 
 export const isValidPhone = (phone: string) => {

@@ -7,7 +7,7 @@ import {Navigation} from 'react-native-navigation';
 import {storeData, LOGIN_MUTATION} from '../features/login-features';
 import {isValidEmail, isValidPassword} from '../features/validations';
 import {Button, ButtonText} from '../styled-components/button';
-import {Form, FormError} from '../styled-components/forms';
+import {FormField, FormError} from '../styled-components/forms';
 import {H1} from '../styled-components/heading';
 
 export const LoginScreen = (props: {componentId: string}) => {
@@ -49,7 +49,7 @@ export const LoginScreen = (props: {componentId: string}) => {
   return (
     <View>
       <H1> Bem-vindo(a) à Taqtile! </H1>
-      <Form
+      <FormField
         label="E-mail"
         autoCapitalize="none"
         placeholder="email@email.com.br"
@@ -59,7 +59,7 @@ export const LoginScreen = (props: {componentId: string}) => {
         keyboardType="email-address"
         onEndEditing={isValidEmail(email)}
       />
-      <Form
+      <FormField
         label="Senha"
         autoCapitalize="none"
         placeholder="Mínimo 7 caracteres, uma letra e um número"

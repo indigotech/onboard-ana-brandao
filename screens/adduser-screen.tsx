@@ -14,7 +14,7 @@ import {
   isValidName,
 } from '../features/validations';
 import {Button, ButtonText} from '../styled-components/button';
-import {Form, FormError, FormLabel} from '../styled-components/forms';
+import {FormField, FormError, FormLabel} from '../styled-components/forms';
 import {styles} from '../styled-components/styles';
 
 export const AddUserScreen = (props: {componentId: string}) => {
@@ -61,7 +61,7 @@ export const AddUserScreen = (props: {componentId: string}) => {
 
   return (
     <ScrollView>
-      <Form
+      <FormField
         label="Nome completo"
         autoCapitalize="words"
         placeholder="Nome Sobrenome"
@@ -71,7 +71,7 @@ export const AddUserScreen = (props: {componentId: string}) => {
         keyboardType="default"
         onEndEditing={isValidName(name)}
       />
-      <Form
+      <FormField
         label="Telefone"
         autoCapitalize="none"
         placeholder="Com DDD, somente números"
@@ -81,7 +81,7 @@ export const AddUserScreen = (props: {componentId: string}) => {
         keyboardType="numeric"
         onEndEditing={isValidPhone(phone)}
       />
-      <Form
+      <FormField
         label="Data de nascimento"
         autoCapitalize="none"
         placeholder="AAAA-MM-DD"
@@ -91,7 +91,7 @@ export const AddUserScreen = (props: {componentId: string}) => {
         keyboardType="phone-pad"
         onEndEditing={isValidBirthDate(birthDate)}
       />
-      <Form
+      <FormField
         label="E-mail"
         autoCapitalize="none"
         placeholder="email@email.com.br"
@@ -101,7 +101,7 @@ export const AddUserScreen = (props: {componentId: string}) => {
         keyboardType="email-address"
         onEndEditing={isValidEmail(email)}
       />
-      <Form
+      <FormField
         label="Senha"
         autoCapitalize="none"
         placeholder="Mínimo 7 caracteres, uma letra e um número"

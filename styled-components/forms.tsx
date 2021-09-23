@@ -34,7 +34,7 @@ export const FormCaption = styled(Text)`
   margin-horizontal: 5%;
 `;
 
-export const Form = (props: {
+export const FormField = (props: {
   label: string;
   autoCapitalize: 'none' | 'sentences' | 'words' | 'characters' | undefined;
   value: string;

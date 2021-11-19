@@ -8,6 +8,10 @@ export const isValidPassword = (password: string) => {
   return passwordRegex.test(password);
 };
 
+export const isValidName = (name: string) => {
+  return !!name;
+};
+
 export const isValidPhone = (phone: string) => {
   if (phone.length !== 11) {
     return false;
@@ -20,12 +24,4 @@ export const isValidBirthDate = (birthDate: string) => {
   const birthDateRegex =
     /^(?:19\d{2}|200[0-7])-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])\b$/;
   return birthDateRegex.test(birthDate);
-};
-
-export const isValidRole = (role: string) => {
-  if (role !== 'admin' && role !== 'user') {
-    return false;
-  } else {
-    return true;
-  }
 };

@@ -1,17 +1,19 @@
 import React from 'react';
 
 import {useQuery} from '@apollo/client';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {View, FlatList, TouchableOpacity} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {FAB} from 'react-native-paper';
 
-import {styles} from '../features/styles';
 import {
   USERS_QUERY,
   User,
   UsersQuery,
   PageInput,
 } from '../features/users-features';
+import {H2, ColoredH3} from '../styled-components/heading';
+import {styles} from '../styled-components/styles';
+import {Container} from '../styled-components/views';
 
 export const UsersScreen = (props: {componentId: string}) => {
   React.useEffect(() => {
@@ -35,10 +37,10 @@ export const UsersScreen = (props: {componentId: string}) => {
           },
         });
       }}>
-      <View style={styles.item}>
-        <Text style={styles.primary}>{item.name}</Text>
-        <Text style={styles.secondary}>{item.email}</Text>
-      </View>
+      <Container>
+        <H2>{item.name}</H2>
+        <ColoredH3>{item.email}</ColoredH3>
+      </Container>
     </TouchableOpacity>
   );
 

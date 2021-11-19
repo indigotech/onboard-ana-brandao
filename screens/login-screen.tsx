@@ -1,19 +1,14 @@
 import React, {useState} from 'react';
 
 import {useMutation} from '@apollo/client';
-import {
-  Alert,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  ActivityIndicator,
-} from 'react-native';
+import {Alert, View, ActivityIndicator} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
 import {storeData, LOGIN_MUTATION} from '../features/login-features';
-import {styles} from '../features/styles';
 import {isValidEmail, isValidPassword} from '../features/validations';
+import {Button, ButtonText} from '../styled-components/button';
+import {FormField, FormError} from '../styled-components/forms';
+import {H1} from '../styled-components/heading';
 
 export const LoginScreen = (props: {componentId: string}) => {
   React.useEffect(() => {
@@ -37,6 +32,7 @@ export const LoginScreen = (props: {componentId: string}) => {
     },
     onError: () => {},
   });
+
   const handleLogin = async () => {
     if (isValidEmail(email) && isValidPassword(password)) {
       await login({variables: {email, password}});
@@ -47,63 +43,41 @@ export const LoginScreen = (props: {componentId: string}) => {
         ]);
         return;
       }
-      if (password.length > 0 && password.length < 7) {
-        Alert.alert(
-          'Senha inválida!',
-          'A senha deve ter ao menos 7 caracteres.',
-          [{text: 'Ok'}],
-        );
-        return;
-      }
-      if (!isValidEmail(email)) {
-        Alert.alert('Email inválido!', 'Insira um e-mail válido.', [
-          {text: 'Ok'},
-        ]);
-        return;
-      }
-      if (!isValidPassword(password)) {
-        Alert.alert(
-          'Senha inválida!',
-          'A senha deve ter ao menos um número e uma letra.',
-          [{text: 'Ok'}],
-        );
-        return;
-      }
     }
   };
 
   return (
     <View>
-      <Text style={styles.welcome}> Bem-vindo(a) à Taqtile! </Text>
-      <Text style={styles.formDescription}>E-mail</Text>
-      <TextInput
-        style={styles.formInput}
+      <H1> Bem-vindo(a) à Taqtile! </H1>
+      <FormField
+        label="E-mail"
         autoCapitalize="none"
+        placeholder="email@email.com.br"
         value={email}
         onChangeText={setEmail}
-        placeholder="email@email.com.br"
+        secureTextEntry={false}
+        keyboardType="email-address"
+        onEndEditing={isValidEmail(email)}
       />
-      <Text style={styles.formDescription}>Senha</Text>
-      <TextInput
-        style={styles.formInput}
+      <FormField
+        label="Senha"
         autoCapitalize="none"
+        placeholder="Mínimo 7 caracteres, uma letra e um número"
         value={password}
         onChangeText={setPassword}
-        placeholder="0000aaaa"
         secureTextEntry
+        keyboardType="default"
+        onEndEditing={isValidPassword(password)}
       />
-      <TouchableOpacity
-        style={styles.formButton}
+      <Button
         disabled={loading}
         onPress={() => {
           handleLogin();
         }}>
-        <Text style={styles.formButtonText}>
-          {loading ? 'Carregando' : 'Entrar'}
-        </Text>
-      </TouchableOpacity>
+        <ButtonText>{loading ? 'Carregando' : 'Entrar'}</ButtonText>
+      </Button>
       {loading && <ActivityIndicator color="lightgrey" />}
-      <Text style={styles.formError}>{error && error.toString()}</Text>
+      <FormError>{error && error.toString()}</FormError>
     </View>
   );
 };
